@@ -183,7 +183,7 @@ export const CliKeysPage = ({
     };
 
     const getInstallCommand = (key: string) =>
-        `curl -fsSL https://kodus.io/install | bash --team-key ${key}`;
+        `curl -fsSL https://review-skill.com/install | bash -s -- --team-key ${key}`;
 
     const handleCopyInstallCommand = async () => {
         if (!createdKey) return;
@@ -366,36 +366,6 @@ export const CliKeysPage = ({
                                                 </TableCell>
                                                 <TableCell align="right">
                                                     <div className="flex items-center justify-end gap-2">
-                                                        {cliKey.active && (
-                                                            <Button
-                                                                size="sm"
-                                                                variant="helper"
-                                                                leftIcon={
-                                                                    <CopyIcon />
-                                                                }
-                                                                onClick={async () => {
-                                                                    try {
-                                                                        await ClipboardHelpers.copyTextToClipboard(
-                                                                            getInstallCommand(
-                                                                                cliKey.uuid,
-                                                                            ),
-                                                                        );
-                                                                        toast({
-                                                                            variant:
-                                                                                "success",
-                                                                            title: "Install command copied",
-                                                                        });
-                                                                    } catch {
-                                                                        toast({
-                                                                            variant:
-                                                                                "danger",
-                                                                            title: "Failed to copy command",
-                                                                        });
-                                                                    }
-                                                                }}>
-                                                                Copy install
-                                                            </Button>
-                                                        )}
                                                         <Button
                                                             size="sm"
                                                             variant="error"
