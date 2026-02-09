@@ -36,6 +36,7 @@ type CodeReviewSummary = {
     behaviourForExistingDescription?: CodeReviewSummaryOptions;
     customInstructions?: string;
     behaviourForNewCommits?: BehaviourForNewCommits;
+    summaryOutputTarget?: SummaryOutputTarget;
 };
 
 type CodeReviewPathInstruction = {
@@ -196,4 +197,9 @@ export enum BehaviourForNewCommits {
     NONE = "none",
     REPLACE = "replace",
     CONCATENATE = "concatenate",
+}
+
+export enum SummaryOutputTarget {
+    DESCRIPTION = "description",
+    COMMENT = "comment",
 }

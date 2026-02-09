@@ -36,6 +36,7 @@ import { ExternalReferencesDisplay } from "./_components/external-references-dis
 import {
     BehaviourForNewCommits,
     CodeReviewSummaryOptions,
+    SummaryOutputTarget,
     type AutomationCodeReviewConfigPageProps,
     type CodeReviewFormType,
 } from "../../_types";
@@ -87,6 +88,20 @@ const behaviorForCommitsAfterPROpenedOptions = [
         value: BehaviourForNewCommits.REPLACE,
         name: "Replace Kody's summary",
         description: "Replaces the existing summary with a new one",
+    },
+] as const;
+
+const summaryOutputTargetOptions = [
+    {
+        value: SummaryOutputTarget.DESCRIPTION,
+        name: "Update description",
+        description: "Adds the summary to the PR description",
+        default: true,
+    },
+    {
+        value: SummaryOutputTarget.COMMENT,
+        name: "Post as comment",
+        description: "Posts the summary as a PR comment instead",
     },
 ] as const;
 
@@ -376,13 +391,90 @@ export default function PRSummary(props: AutomationCodeReviewConfigPageProps) {
                                     ))}
                                 </ToggleGroup.Root>
                             </FormControl.Input>
-                        </FormControl.Root>
-                    )}
-                />
+                </FormControl.Root>
+            )}
+        />
 
-                <Controller
-                    name="summary.customInstructions.value"
-                    control={form.control}
+        <Controller
+            name="summary.summaryOutputTarget.value"
+            control={form.control}
+            render={({ field }) => (
+                <FormControl.Root>
+                    <div className="mb-2 flex flex-row items-center gap-2">
+                        <FormControl.Label className="mb-0">
+                            Summary Output Target
+                        </FormControl.Label>
+
+                        <OverrideIndicatorForm fieldName="summary.summaryOutputTarget" />
+                    </div>
+
+                    <FormControl.Helper className="mb-3">
+                        Choose where Kody should post the PR summary.
+                    </FormControl.Helper>
+
+                    <FormControl.Input>
+                        <ToggleGroup.Root
+                            type="single"
+                            disabled={
+                                field.disabled || !generatePRSummary
+                            }
+                            className="grid grid-cols-1 gap-2 sm:grid-cols-2"
+                            value={field.value}
+                            onValueChange={(value) => {
+                                if (!value) return;
+                                field.onChange(
+                                    value as SummaryOutputTarget,
+                                );
+                            }}>
+                            {summaryOutputTargetOptions.map((option) => (
+                                <ToggleGroup.ToggleGroupItem
+                                    asChild
+                                    key={option.value}
+                                    value={option.value}>
+                                    <Button
+                                        size="lg"
+                                        variant="helper"
+                                        className="w-full items-start py-4">
+                                        <div className="flex items-start justify-between gap-6">
+                                            <div className="flex flex-col gap-2">
+                                                <Heading
+                                                    variant="h3"
+                                                    className="truncate">
+                                                    {option.name}
+
+                                                    {"default" in
+                                                        option && (
+                                                        <small className="text-text-secondary ml-1">
+                                                            (default)
+                                                        </small>
+                                                    )}
+                                                </Heading>
+
+                                                <p className="text-text-secondary text-xs">
+                                                    {option.description}
+                                                </p>
+                                            </div>
+
+                                            <Checkbox
+                                                decorative
+                                                checked={
+                                                    option.value ===
+                                                    field.value
+                                                }
+                                            />
+                                        </div>
+                                    </Button>
+                                </ToggleGroup.ToggleGroupItem>
+                            ))}
+                        </ToggleGroup.Root>
+                    </FormControl.Input>
+                </FormControl.Root>
+            )}
+        />
+
+        <Controller
+            name="summary.customInstructions.value"
+            control={form.control}
                     render={({ field }) => (
                         <FormControl.Root>
                             <div className="mb-2 flex flex-row items-center gap-2">
