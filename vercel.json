@@ -4,7 +4,6 @@
     "buildCommand": "yarn build",
     "installCommand": "yarn install",
     "outputDirectory": ".next",
-    "nodeVersion": "22.x",
     "github": {
         "silent": true
     }
