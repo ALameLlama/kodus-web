@@ -33,9 +33,10 @@ export const useKodyRulesLimits = () => {
             limit: Number.POSITIVE_INFINITY,
         };
 
-    if (subscription.status === "free" || subscription.status === "self-hosted")
+    if (subscription.status === "free")
         return { canAddMoreRules: total < 10, total, limit: 10 };
 
+    // Paid plans and self-hosted have no limits
     return { canAddMoreRules: true, total, limit: Number.POSITIVE_INFINITY };
 };
 
