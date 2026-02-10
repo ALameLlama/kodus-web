@@ -78,9 +78,9 @@ const canAccessRoute = ({
 
         const createRoutePattern = (route: string): string => {
             return route
-                .replace(/[.*+?^${}()|[]\]/g, "\$&")
-                .replace(/:teamId/g, "[\w-]+")
-                .replace(/:[a-zA-Z]+/g, "[\w-]+");
+                .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+                .replace(/:teamId/g, "[\\w-]+")
+                .replace(/:[a-zA-Z]+/g, "[\\w-]+");
         };
 
         const pattern = createRoutePattern(route);

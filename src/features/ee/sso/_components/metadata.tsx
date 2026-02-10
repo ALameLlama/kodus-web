@@ -1,6 +1,8 @@
 "use server";
 
+import axios from "axios";
 import { MetadataReader } from "passport-saml-metadata";
+import { useAgent } from "request-filtering-agent";
 
 export async function parseMetadataFromFile(fileContent: string) {
     try {
@@ -23,20 +25,27 @@ export async function fetchAndParseMetadata(url: string) {
 
     try {
         const parsedUrl = new URL(url);
-        console.log(parsedUrl);
         if (
             !["http:", "http", "https:", "https"].includes(parsedUrl.protocol)
         ) {
             throw new Error("URL must use http or https protocol");
         }
 
-        const response = await fetch(url);
+        const response = await axios.get(url, {
+            httpAgent: useAgent(url),
+            httpsAgent: useAgent(url),
+            responseType: "text",
+            transitional: {
+                silentJSONParsing: false,
+                forcedJSONParsing: false,
+            },
+        });
 
-        if (!response.ok) {
+        if (response.status < 200 || response.status >= 300) {
             throw new Error(`Failed to fetch metadata: ${response.statusText}`);
         }
 
-        const rawMetadata = await response.text();
+        const rawMetadata = (await response.data) as string;
         return await parseMetadataFromFile(rawMetadata);
     } catch (error) {
         console.error("Metadata fetch error:", error);
