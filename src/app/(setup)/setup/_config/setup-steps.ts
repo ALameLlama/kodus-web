@@ -10,6 +10,10 @@ const BASE_SETUP_STEPS = [
         path: "/setup/creating-workspace",
     },
     {
+        id: "marketing-survey",
+        path: "/setup/marketing-survey",
+    },
+    {
         id: "connecting-git-tool",
         path: "/setup/connecting-git-tool",
     },

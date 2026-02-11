@@ -11,6 +11,7 @@ export const API_ROUTES = {
     getInviteData: "/user/invite",
     completeUserInvitation: "/user/invite/complete-invitation",
     segmentTrack: "/segment/track",
+    posthogTrack: "/posthog/track",
     loginOAuth: "/auth/oauth",
     checkForEmailExistence: "/user/email",
     getOrganizationsByDomain: "/organization/domain",
