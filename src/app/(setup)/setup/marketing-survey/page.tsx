@@ -165,7 +165,10 @@ export default function MarketingSurveyPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleContinue = async () => {
-        if (!userId) return;
+        if (!userId) {
+            router.push("/setup/connecting-git-tool");
+            return;
+        }
 
         setIsSubmitting(true);
 
