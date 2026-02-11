@@ -146,7 +146,7 @@ export default function App() {
             },
         );
 
-        router.push("/setup/connecting-git-tool");
+        router.push("/setup/marketing-survey");
     });
 
     const { isSubmitting, isValid } = form.formState;
@@ -387,7 +387,7 @@ export default function App() {
                         </Button>
 
                         <Link
-                            href="/setup/connecting-git-tool"
+                            href="/setup/marketing-survey"
                             className="self-center text-sm">
                             Skip this step for now
                         </Link>
