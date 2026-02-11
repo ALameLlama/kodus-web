@@ -206,7 +206,7 @@ export default function MarketingSurveyPage() {
     const canContinue = selectedSource && selectedGoal;
 
     return (
-        <Page.Root className="mx-auto flex min-h-screen flex-col gap-6 overflow-x-hidden p-6 lg:flex-row lg:gap-6">
+        <Page.Root className="mx-auto flex min-h-screen max-h-screen flex-col gap-6 overflow-hidden p-6 lg:flex-row lg:gap-6">
             <div className="bg-card-lv1 flex w-full flex-col justify-center gap-10 rounded-3xl p-8 lg:max-w-none lg:flex-10 lg:p-12">
                 <div className="flex-1 space-y-6 overflow-hidden">
                     <h1 className="text-2xl font-bold">
@@ -238,7 +238,7 @@ export default function MarketingSurveyPage() {
             </div>
 
             <div className="flex w-full flex-col gap-10 overflow-y-auto lg:flex-14 lg:p-10">
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-8 pb-10">
                     <StepIndicators.Auto />
 
                     <div className="flex flex-col gap-6">
