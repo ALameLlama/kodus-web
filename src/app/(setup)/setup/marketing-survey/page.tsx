@@ -20,6 +20,7 @@ import {
     Target,
 } from "lucide-react";
 import { useAuth } from "src/core/providers/auth.provider";
+import { ScrollArea } from "@components/ui/scroll-area";
 import { cn } from "src/core/utils/components";
 import { capturePostHogEvent } from "src/core/utils/posthog";
 
@@ -240,7 +241,7 @@ export default function MarketingSurveyPage() {
                 </div>
             </div>
 
-            <div className="flex w-full flex-col gap-10 overflow-y-auto lg:flex-14 lg:p-10">
+            <ScrollArea className="flex w-full flex-col gap-10 lg:flex-14 lg:p-10">
                 <div className="flex flex-col gap-8 pb-10">
                     <StepIndicators.Auto />
 
@@ -319,7 +320,7 @@ export default function MarketingSurveyPage() {
                         </button>
                     </div>
                 </div>
-            </div>
+            </ScrollArea>
         </Page.Root>
     );
 }
