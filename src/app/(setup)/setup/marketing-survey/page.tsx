@@ -237,8 +237,8 @@ export default function MarketingSurveyPage() {
                 </div>
             </div>
 
-            <div className="flex w-full flex-col gap-10 lg:flex-14 lg:p-10">
-                <div className="flex flex-1 flex-col gap-8">
+            <div className="flex w-full flex-col gap-10 overflow-y-auto lg:flex-14 lg:p-10">
+                <div className="flex flex-col gap-8">
                     <StepIndicators.Auto />
 
                     <div className="flex flex-col gap-6">
