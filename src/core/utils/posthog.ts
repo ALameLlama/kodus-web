@@ -1,31 +1,28 @@
-import { API_ROUTES } from "../config/constants";
-import { axiosAuthorized } from "./axios";
-import { pathToApiUrl } from "./helpers";
+"use server";
 
-export function capturePostHogEvent(event: {
+import { PostHog } from "posthog-node";
+
+export async function capturePostHogEvent(event: {
     userId: string;
     event: string;
     properties?: any;
 }) {
-    return axiosAuthorized.post(pathToApiUrl(API_ROUTES.posthogTrack), event);
-}
+    const apiKey = process.env.WEB_POSTHOG_KEY;
+    if (!apiKey) return;
 
-/*
- * Backend implementation needed:
- * Create endpoint POST /posthog/track that receives { userId, event, properties }
- * and calls PostHog server-side to capture the event.
- * 
- * Example implementation (pseudo-code):
- * 
- * router.post('/posthog/track', async (req, res) => {
- *   const { userId, event, properties } = req.body;
- *   const posthog = new PostHog(process.env.WEB_POSTHOG_KEY);
- *   await posthog.capture({
- *     distinctId: userId,
- *     event: event,
- *     properties: properties
- *   });
- *   await posthog.shutdown();
- *   res.json({ success: true });
- * });
- */
+    const posthog = new PostHog(apiKey, {
+        flushAt: 1,
+        flushInterval: 0,
+        host: "https://us.i.posthog.com",
+    });
+
+    try {
+        posthog.capture({
+            distinctId: event.userId,
+            event: event.event,
+            properties: event.properties,
+        });
+    } finally {
+        await posthog.shutdown();
+    }
+}
